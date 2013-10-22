@@ -1,19 +1,20 @@
 package com.circus.liran.zoopool.util;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hsqldb.lib.StringUtil;
-
-import com.circus.liran.zoopool.exception.ZooPoolException;
 
 /**
  * zoopool 工程工具类
@@ -25,6 +26,10 @@ import com.circus.liran.zoopool.exception.ZooPoolException;
  */
 
 public class ZooPoolUtil {
+
+	public static long getRandomInt(int max, int min) {
+		return Math.round(Math.random() * (max - min) + min);
+	}
 
 	/**
 	 * 功能:获得一个路径下的所有文件 思想:递归 附加:无
@@ -47,8 +52,8 @@ public class ZooPoolUtil {
 	}
 
 	/**
-	 * @functionnamepublic static List<String> readFileData(File file) throws
-	 *                     ZooPoolException;
+	 * @functionname public static List<String> readFileData(File file) throws
+	 *               ZooPoolException;
 	 * 
 	 * @function:：读取文件 函数思想： 文件读取
 	 * 
@@ -98,6 +103,23 @@ public class ZooPoolUtil {
 		return readFileData(file);
 	}
 
+	public static List<String> readFileData(InputStream input)
+			throws IOException {
+		List<String> contents = new ArrayList<String>();
+		BufferedReader br = new BufferedReader(new InputStreamReader(input));
+		String line = null;
+		while (br.ready()) {
+			line = br.readLine().trim();
+
+			if (line != null && line.isEmpty() != true) { // && line.length()>1
+				contents.add(line);
+			}
+		}
+
+		br.close();
+		return contents;
+	}
+
 	/**
 	 * @functionname public static long getElementString(String word, String
 	 *               splitString)；
@@ -109,12 +131,19 @@ public class ZooPoolUtil {
 	 */
 	public static int getElementString(String word, String splitString) {
 		int reCount = 0;
-		if (!StringUtil.isEmpty(word)) {
+
+		if (!isEmpty(word)) {
 			reCount = word.split(splitString).length;
 		}
 		return reCount;
 	}
 
+	
+	
+	public static boolean isEmpty(String word)
+	{
+		return word == null || word.isEmpty() ? true : false;
+	}
 	/***
 	 * @functionname： public static String wordListToString(List<String>
 	 *                wordList, String splitWord)；
@@ -142,6 +171,32 @@ public class ZooPoolUtil {
 		return stringBuffer.toString();
 	}
 
+	/***
+	 * @functionname： public static String wordListToString(String[] wordList,
+	 *                String splitWord)；
+	 * 
+	 * @function： 将字符串数组转换为String通过分割副 函数思想： 无
+	 * 
+	 * @param wordList
+	 *            wordList
+	 * @param splitWord
+	 *            分割符
+	 * @return
+	 */
+	public static String wordListToString(String[] wordList, String splitWord) {
+		StringBuffer stringBuffer = new StringBuffer();
+		boolean isFirst = true;
+		for (String word : wordList) {
+			if (isFirst) {
+				stringBuffer.append(word);
+				isFirst = false;
+			} else {
+				stringBuffer.append(" " + word);
+			}
+		}
+		return stringBuffer.toString();
+	}
+
 	public static void writeFile(File file, List<String> contents)
 			throws IOException {
 		FileWriter fw = null;
@@ -154,8 +209,57 @@ public class ZooPoolUtil {
 		}
 	}
 
-	public static void writeFile(String fileName, List<String> contents) throws IOException {
+	public static void appendFile(String file, String conent) {
+		BufferedWriter out = null;
+		try {
+			out = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(file, true)));
+			out.write(conent);
+		} catch (Exception e) {
+
+		} finally {
+			try {
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void appendFileLine(String file, String content) {
+		appendFile(file, content + "\n");
+	}
+
+	public static boolean isExistFile(File file) {
+		return file != null && file.isFile() && file.exists();
+	}
+
+	public static boolean rmFile(File file) {
+		return isExistFile(file) ? file.delete() : false;
+	}
+
+	public static boolean rmFile(String file) {
+		return rmFile(new File(file));
+	}
+
+	public static boolean isExistFile(String filename) {
+		return isExistFile(new File(filename));
+	}
+
+	public static boolean isExistFolder(File pathFile) {
+		return pathFile != null && pathFile.isDirectory() && pathFile.exists();
+	}
+
+	public static boolean isExistFolder(String path) {
+		return isExistFolder(new File(path));
+	}
+
+	public static void writeFile(String fileName, List<String> contents)
+			throws IOException {
 		writeFile(new File(fileName), contents);
 	}
 
+	public static void main(String[] args) {
+		System.out.println(rmFile("/home/lixuze/user.log"));
+	}
 }

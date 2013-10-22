@@ -73,7 +73,7 @@ public class DoWord {
 		return fileSet;
 	}
 
-	public void work(String folderPath) throws ZooPoolException {
+	public void work(String folderPath) throws ZooPoolException  {
 		Set<File> fileSet = loadfile(folderPath);
 		for (File file : fileSet) {
 			if (file.isDirectory()) {
