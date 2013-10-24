@@ -73,7 +73,7 @@ public class DoWord {
 		return fileSet;
 	}
 
-	public void work(String folderPath) throws ZooPoolException  {
+	public void work(String folderPath) throws ZooPoolException, com.circus.liran.zoopool.util.ZooPoolException  {
 		Set<File> fileSet = loadfile(folderPath);
 		for (File file : fileSet) {
 			if (file.isDirectory()) {
@@ -108,13 +108,6 @@ public class DoWord {
 	}
 
 	public static void main(String args[]) {
-		DoWord dw;
-		try {
-			dw = new DoWord("/home/lixuze/traindata/cn_stopwordAll.txt");
-			dw.work("/home/lixuze/traindata/sentiment_keyword");
-		} catch (ZooPoolException e) {
-			System.out.println(e);
-		}
 
 	}
 

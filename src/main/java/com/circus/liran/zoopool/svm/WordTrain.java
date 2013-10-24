@@ -15,7 +15,7 @@ import com.circus.liran.zoopool.util.ZooPoolUtil;
 public class WordTrain {
 
 	public static Map<String, Long> getWordID(String filePath)
-			throws ZooPoolException {
+			throws ZooPoolException, com.circus.liran.zoopool.util.ZooPoolException {
 		Map<String, Long> mapWordID = new HashMap<String, Long>();
 		List<String> contents = ZooPoolUtil.readFileData(filePath);
 		long id = 1000;
@@ -61,7 +61,7 @@ public class WordTrain {
 
 	}
 
-	public static void main(String args[]) throws ZooPoolException {
+	public static void main(String args[]) throws ZooPoolException, com.circus.liran.zoopool.util.ZooPoolException {
 		Map<String, Long> mapWordID = getWordID("/home/lixuze/traindata/wordrate.txt");
 		Set<File> fileList = ZooPoolUtil.folderWalk("/home/lixuze/traindata/keyword");
 		for(File file:fileList)
