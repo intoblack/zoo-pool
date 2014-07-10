@@ -2,7 +2,6 @@ package com.circus.liran.zoopool.Hbase;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,16 +11,10 @@ import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
-import org.apache.hadoop.hbase.filter.Filter;
-import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
-import org.apache.hadoop.hbase.filter.SubstringComparator;
-import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.hsqldb.lib.StringUtil;
 
 import com.circus.liran.zoopool.moudle.ClassfierElement;
-import com.weidou.mota.event.dao.DaoException;
-import com.weidou.mota.event.domain.Status;
 
 public class StatusHbase {
 
@@ -82,11 +75,4 @@ public class StatusHbase {
 		}
 		return resultList;
 	}
-	
-	
-//	public static ClassfierElement getStatusByID(long id)
-//	{
-//		HTable table = new HTable(conf, tableName);
-//		ClassfierElement elemt = new ClassfierElement();
-//	}
 }

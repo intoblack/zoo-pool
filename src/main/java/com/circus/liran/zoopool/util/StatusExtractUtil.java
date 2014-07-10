@@ -83,9 +83,6 @@ public class StatusExtractUtil {
 	}
 
 	public static void main(String args[]) {
-//		for (String str : extractEmtion("#91问问小日记#今天做了2份属性问卷，2个幸运问卷没有回答成功。[酷库熊哭泣]")) {
-//			System.out.println(str);
-//		}
 		System.out.println(getClearString("#91问问小日记#今天做了2份属性问卷，2个幸运问卷没有回答成功。[酷库熊哭泣]", extractEmtion("#91问问小日记#今天做了2份属性问卷，2个幸运问卷没有回答成功。[酷库熊哭泣]")));
 	}
 }
