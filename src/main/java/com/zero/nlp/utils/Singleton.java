@@ -17,20 +17,30 @@ public class Singleton {
 	}
 
 	// 静态工厂方法,返还此类惟一的实例
+	/**
+	 * 返回注册单例功能   
+	 * 
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public static Singleton getInstance(String name) {
-		if (name == null) {
+
+		if (StringUtils.isEmpty(name)) {
 			name = Singleton.class.getName();
-			System.out.println("name == null" + "--->name=" + name);
 		}
+
 		if (map.get(name) == null) {
-			try {
-				map.put(name, (Singleton) Class.forName(name).newInstance());
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+			synchronized (Singleton.class) {
+				if (map.get(name) == null) {
+					try {
+						map.put(name, (Singleton) Class.forName(name)
+								.newInstance());
+					} catch (InstantiationException | IllegalAccessException
+							| ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		return map.get(name);
