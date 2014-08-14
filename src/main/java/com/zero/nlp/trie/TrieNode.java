@@ -13,7 +13,7 @@ import java.util.Map;
  *            节点信息储存值　，　最好为int , char , double 等类型　
  */
 public class TrieNode<T> {
-	private double value;
+	private int value = 0 ;
 	private Map<T, TrieNode<T>> wordMap = new HashMap<T, TrieNode<T>>();
 
 	/**
@@ -22,11 +22,11 @@ public class TrieNode<T> {
 	 * 
 	 * @return
 	 */
-	public double getValue() {
+	public int getValue() {
 		return value;
 	}
 
-	public void setValue(double value) {
+	public void setValue(int value) {
 		this.value = value;
 	}
 
